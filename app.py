@@ -12,6 +12,8 @@ def create_index():
         # Create the index if it doesn't exist
         es.indices.create(index=index_name)
 
+create_index()  # Create the index when the application starts
+
 @app.route("/health", methods=["GET"])
 def health_check():
     """
@@ -29,8 +31,6 @@ def insert_or_update_city():
 
     if not city or not population:
         return jsonify({"error": "Invalid data. 'city' and 'population' are required."}), 400
-
-    create_index()
 
     try:
         # Check if the city already exists in the index
@@ -60,7 +60,6 @@ def insert_or_update_city():
 
     return jsonify({"message": message, "operation": operation})
 
-
 @app.route("/population/<city>", methods=["GET"])
 def get_population(city):
     """
@@ -68,8 +67,6 @@ def get_population(city):
     """
     if not city:
         return jsonify({"error": "Invalid request. 'city' parameter is missing."}), 400
-
-    create_index()
 
     try:
         # Retrieve the city document from the index
