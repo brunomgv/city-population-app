@@ -35,6 +35,9 @@ def validate_insert_or_update_payload(data):
 
 @app.route("/city", methods=["POST"])
 def insert_or_update_city():
+    """
+    Endpoint to insert or update city data
+    """
     # Retrieve the request payload as JSON
     data = request.get_json()
 
@@ -89,6 +92,9 @@ def validate_get_population_parameter(city):
 
 @app.route("/population/<city>", methods=["GET"])
 def get_population(city):
+    """
+    Endpoint to retrieve the population of a specific city
+    """
     # Validate the city parameter
     valid, error_message = validate_get_population_parameter(city)
     if not valid:
