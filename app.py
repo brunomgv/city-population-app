@@ -82,24 +82,11 @@ def insert_or_update_city():
     # Return the response
     return jsonify({"message": message, "operation": operation})
 
-
-def validate_get_population_parameter(city):
-    # Validate the city parameter for the get_population endpoint
-    if not isinstance(city, str):
-        return False, "Invalid request. 'city' parameter must be a string."
-    return True, ""
-
-
 @app.route("/population/<city>", methods=["GET"])
 def get_population(city):
     """
     Endpoint to retrieve the population of a specific city
     """
-    # Validate the city parameter
-    valid, error_message = validate_get_population_parameter(city)
-    if not valid:
-        return jsonify({"error": error_message}), 400
-
     try:
         # Retrieve the document from Elasticsearch
         result = es.get(index=index_name, id=city)
